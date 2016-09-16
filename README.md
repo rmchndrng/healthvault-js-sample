@@ -1,2 +1,3 @@
-# healthvault-js-sample
-A Sample project which uses healthvault-js-library
+# Healthvault Web application using Node + Express + Angular2 + Typescript + hvjslib
+
+Work in progress.
