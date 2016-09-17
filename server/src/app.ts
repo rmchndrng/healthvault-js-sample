@@ -11,7 +11,8 @@ export class App{
     }
     public setRoutes(){
         this._App.use(express.static('../../client'));
-        this._App.get('/',this._RenderIndex)
+        //All get requests will be served the Angular application. Once it is loaded, Angular router will router to the specific page.
+        this._App.get('*',this._RenderIndex)
     }
 
     public startServer(){

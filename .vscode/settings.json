@@ -8,6 +8,7 @@
         "**/.vscode": true,
         "**/**/node_modules":true,
         "**/**/typings":true,
-        "**/**/dist":true
+        "**/**/dist":true,
+         "**/*.js": { "when": "$(basename).ts"}
     }
 }
