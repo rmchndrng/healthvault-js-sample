@@ -10,6 +10,8 @@ import { IndexComponent } from './components/index/index.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './components/404/404.component';
 
+import { UserService } from './services/user.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,10 @@ import { PageNotFoundComponent } from './components/404/404.component';
     HttpModule,
     routing
   ],
-  providers: [appRoutingProviders],
+  providers: [
+    appRoutingProviders,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
