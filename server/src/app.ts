@@ -1,27 +1,27 @@
 import * as express from 'express'
 import * as path from 'path';
 import * as core from "express-serve-static-core";
-import {DefaultController} from './controllers/defaultController';
-import {RouteConfig} from './config/routeConfig';
+import {DefaultController} from './controllers/default.controller';
+import {RouteConfig} from './config/route.config';
 export class App{
     private _App:express.Express;
-    private _routeConfig:RouteConfig;
-    private _router:core.Router;    
+    private _RouteConfig:RouteConfig;
+    private _Router:core.Router;    
     constructor(){
         this._App = express();
-        this._routeConfig = new RouteConfig();
-        this._router = express.Router();        
+        this._RouteConfig = new RouteConfig();
+        this._Router = express.Router();        
     }
    
-    public setRoutes(){        
+    public SetRoutes(){        
         this._App.use(express.static(path.resolve(__dirname,'../../client')));
-        this._routeConfig.registerRoutes(this._router);
-        this._App.get('*',this._router);
+        this._RouteConfig.RegisterRoutes(this._Router);
+        this._App.get('*',this._Router);
     }
 
-    public startServer(){
+    public StartServer(){
         this._App.listen(5000, function () {
-            console.log('Example app listening on port 5000!');
+            console.log('Listening on port 5000!');
         });
     } 
 

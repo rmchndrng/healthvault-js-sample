@@ -7,7 +7,11 @@
         "**/.DS_Store": true,        
         "**/**/node_modules":true,
         "**/**/typings":true,
-        //"**/**/dist":true,
-         "**/*.js": { "when": "$(basename).ts"}
+        "**/**/dist":true,
+         "**/*.js": { "when": "$(basename).ts"},
+         
+         //Adding the copied common code, to avoid accedental editing.
+         "client/src/app/common":true,
+         //"server/src/common":true
     }
 }

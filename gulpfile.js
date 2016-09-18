@@ -8,14 +8,38 @@ const gulp = require("gulp"),
     tslint = require('gulp-tslint'),
     concat = require('gulp-concat'),
     runSequence = require('run-sequence'),
-    shell = require('gulp-shell'),    
-    gulpTypings = require("gulp-typings");
+    shell = require('gulp-shell'),
+    gulpTypings = require("gulp-typings"),
+    watch = require('gulp-watch'),
+    chmod = require('gulp-chmod');
 
 /**
  * Remove build directory.
  */
 gulp.task('clean', (cb) => {
-    return del(["dist"], cb);
+    return del(["dist", "server/src/common", "client/src/app/common"], cb);
+});
+
+gulp.task('copy:common', function () {
+    gulp.src('common/**/*.ts')
+    //    .pipe(chmod(555))
+        .pipe(gulp.dest('server/src/common'))
+
+    gulp.src('common/**/*.ts')
+      //  .pipe(chmod(555))
+        .pipe(gulp.dest('client/src/app/common'))
+});
+
+//http://blog.andrewray.me/how-to-copy-only-changed-files-with-gulp/
+gulp.task('watch-common', function () {
+    gulp.src('common/**/*.ts', { base: 'common' })
+        .pipe(watch('common', { base: 'common' }))       
+        .pipe(gulp.dest('client/src/app/common'));
+
+    gulp.src('common/**/*.ts', { base: 'common' })
+        .pipe(watch('common', { base: 'common' }))        
+        .pipe(gulp.dest('server/src/common'));
+    //gulp.watch('common/**/*.ts', ['copy:common']);
 });
 
 /**
@@ -33,9 +57,9 @@ gulp.task('build:server', function () {
 
 gulp.task('build:client:watch', function () {
     return gulp.src('')
-    .pipe(
-        shell(['ng build -w --output-path ../dist/client'],{cwd:'client'})
-    )
+        .pipe(
+        shell(['ng build -w --output-path ../dist/client'], { cwd: 'client' })
+        )
 });
 
 /**
@@ -49,11 +73,11 @@ gulp.task('build:server:watch', function () {
 
 gulp.task('start:server', function () {
     return gulp.src('')
-    .pipe(
-        shell(['node index.js'],{cwd:'dist/server/src'})
-    )
+        .pipe(
+        shell(['node index.js'], { cwd: 'dist/server/src' })
+        )
 });
 
 gulp.task('default', function () {
-    runSequence('build:server','build:server:watch','build:client:watch');
+    runSequence('clean', 'copy:common', 'watch-common', 'build:server', 'build:server:watch', 'build:client:watch');
 });
